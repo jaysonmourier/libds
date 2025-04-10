@@ -62,3 +62,23 @@ int array_set(Array* array, unsigned index, void* new_element, void (*free_fn)(v
 	array->data[index] = new_element;
 	return ARRAY_SUCCESS;
 }
+
+static int _array_resize(Array* array, size_t new_capacity) {
+	if (!array || !array->data) {
+		return ARRAY_ERR_NULL;
+	}
+
+	if (new_capacity < array->size) {
+		return ARRAY_ERR_INVALID_CAP;
+	}
+
+	void** new_mem_block = realloc(array->data, new_capacity * sizeof(void*));
+
+	if (!new_mem_block) {
+		return ARRAY_ERR_MEMALLOC;
+	}
+	
+	array->capacity = new_capacity;
+	array->data = new_mem_block;
+	return ARRAY_SUCCESS;
+}
