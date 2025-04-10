@@ -31,3 +31,34 @@ void array_destroy(Array* array, void (*free_fn)(void*)) {
 	array->data = NULL;
 	free(array);
 }
+
+int array_get(Array* array, unsigned index, void** element) {
+	if (!array || !array->data || !element) {
+		return ARRAY_ERR_NULL;
+	}
+	
+	if (index >= array->size) {
+		*element = NULL;
+		return ARRAY_ERR_OUT_OF_BOUNDS;
+	}
+
+	*element = array->data[index];
+	return ARRAY_SUCCESS;
+}
+
+int array_set(Array* array, unsigned index, void* new_element, void (*free_fn)(void*)) {
+	if (!array || !array->data) {
+		return ARRAY_ERR_NULL;
+	}
+
+	if (index >= array->size) {
+		return ARRAY_ERR_OUT_OF_BOUNDS;
+	}
+
+	if (free_fn && array->data[index]) {
+		free_fn(array->data[index]);
+	}
+
+	array->data[index] = new_element;
+	return ARRAY_SUCCESS;
+}
