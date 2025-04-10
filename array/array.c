@@ -82,3 +82,20 @@ static int _array_resize(Array* array, size_t new_capacity) {
 	array->data = new_mem_block;
 	return ARRAY_SUCCESS;
 }
+
+int array_add(Array* array, void* element) {
+	if (!array || !array->data) {
+		return ARRAY_ERR_NULL;
+	}
+
+	if (array->size == array->capacity) {
+		size_t new_capacity = array->capacity == 0 ? 1 : array->capacity * ARRAY_GROWTH_FACTOR;
+
+		if (_array_resize(array, new_capacity) != ARRAY_SUCCESS) {
+			return ARRAY_ERR_INTERNAL;
+		}
+	}
+
+	array->data[array->size++] = element;
+	return ARRAY_SUCCESS;
+}
