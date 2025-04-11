@@ -8,18 +8,13 @@ typedef struct {
 	int a;
 } Scalar;
 
-bool compare_scalar(void* a, void* b) {
+bool compare_scalar(const void* a, const void* b) {
 	return ((Scalar*)a)->a < ((Scalar*)b)->a;
 }
 
 int print_array_scalar(void* element) {
-	printf("%zu\n", ((Scalar*)element)->a);
+	printf("%d\n", ((Scalar*)element)->a);
 	return 0;
-}
-
-static unsigned int lcg_rand(unsigned int* seed) {
-	*seed = (*seed * 1103515245 + 12345) & 0x7fffffff;
-	return *seed;
 }
 
 int main(void) {

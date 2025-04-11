@@ -206,7 +206,7 @@ int array_clear(Array* array, void (*free_fn)(void*)) {
 	return ARRAY_SUCCESS;
 }
 
-int array_find_first(const Array* array, const void* element, bool (*cmp)(void*, void*), size_t* index_output) {
+int array_find_first(const Array* array, const void* element, bool (*cmp)(const void*, const void*), size_t* index_output) {
 	if (!array || !element || !cmp || !index_output) {
 		return ARRAY_ERR_NULL;
 	}
@@ -221,7 +221,7 @@ int array_find_first(const Array* array, const void* element, bool (*cmp)(void*,
 	return ARRAY_ERR_NOT_FOUND;
 }
 
-int array_find_last(const Array* array, const void* element, bool (*cmp)(void*, void*), size_t* index_output) {
+int array_find_last(const Array* array, const void* element, bool (*cmp)(const void*, const void*), size_t* index_output) {
 	if (!array || !element || !cmp || !index_output) {
 		return ARRAY_ERR_NULL;
 	}
@@ -247,7 +247,7 @@ static inline unsigned int _lcg_rand(unsigned int* seed) {
 	return *seed;
 }
 
-static int _quicksort_partition(Array *array, size_t low, size_t high, bool (*cmp)(void*,void*), size_t* output) {
+static int _quicksort_partition(Array *array, size_t low, size_t high, bool (*cmp)(const void*, const void*), size_t* output) {
 	if (!array || !cmp) {
 		return ARRAY_ERR_NULL;
 	}
@@ -271,7 +271,7 @@ static int _quicksort_partition(Array *array, size_t low, size_t high, bool (*cm
 	return ARRAY_SUCCESS;
 }
 
-static int _quicksort(Array* array, size_t low, size_t high, bool (*cmp)(void*, void*)) {
+static int _quicksort(Array* array, size_t low, size_t high, bool (*cmp)(const void*, const void*)) {
 	if (!array || !cmp) {
 		return ARRAY_ERR_NULL;
 	}
@@ -323,12 +323,10 @@ static int _quicksort(Array* array, size_t low, size_t high, bool (*cmp)(void*, 
 	return ARRAY_SUCCESS;
 }
 
-int array_sort(Array* array, bool (*cmp)(void*, void*)) {
+int array_sort(Array* array, bool (*cmp)(const void*, const void*)) {
 	if (!array || !cmp) {
 		return ARRAY_ERR_NULL;
 	}
-
-	srand(time(NULL));
 
 	if (_quicksort(array, 0, array->size - 1, cmp) != ARRAY_SUCCESS) {
 		return ARRAY_ERR_INTERNAL;

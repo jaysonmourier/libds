@@ -146,7 +146,7 @@ extern "C" {
 	*         ARRAY_ERR_NOT_FOUND if not found,
 	*         ARRAY_ERR_NULL if any input is NULL
 	*/
-	int array_find_first(const Array* array, const void* element, bool (*cmp)(void*, void*), size_t* index_output);
+	int array_find_first(const Array* array, const void* element, bool (*cmp)(const void*, const void*), size_t* index_output);
 
 	/*
 	* Searches for the last occurrence of an element in the array using a comparison function
@@ -159,7 +159,7 @@ extern "C" {
 	*         ARRAY_ERR_NOT_FOUND if not found,
 	*         ARRAY_ERR_NULL if any input is NULL
 	*/
-	int array_find_last(const Array* array, const void* element, bool (*cmp)(void*, void*), size_t* index_output);
+	int array_find_last(const Array* array, const void* element, bool (*cmp)(const void*, const void*), size_t* index_output);
 
 	/*
 	* Sorts the array with the quicksort algorithm
@@ -168,7 +168,7 @@ extern "C" {
 	* @param cmp Pointer to the function used to compare elements
 	* @return ARRAY_SUCCESS, ARRAY_ERR_NULL or ARRAY_ERR_INTERNAL
 	*/
-	int array_sort(Array* array, bool (*cmp)(void*, void*));
+	int array_sort(Array* array, bool (*cmp)(const void*, const void*));
 
 #ifdef __cplusplus
 }
