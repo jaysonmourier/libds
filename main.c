@@ -1,6 +1,7 @@
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include "array.h"
 
 typedef struct {
@@ -9,6 +10,11 @@ typedef struct {
 
 bool compare_scalar(void* a, void* b) {
 	return ((Scalar*)a)->a < ((Scalar*)b)->a;
+}
+
+static unsigned int lcg_rand(unsigned int* seed) {
+	*seed = (*seed * 1103515245 + 12345) & 0x7fffffff;
+	return *seed;
 }
 
 int main(void) {

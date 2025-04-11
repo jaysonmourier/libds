@@ -242,6 +242,11 @@ static inline void _quicksort_swap(void** a, void** b) {
 	*b = tmp;
 }
 
+static inline unsigned int _lcg_rand(unsigned int* seed) {
+	*seed = (*seed * 1103515245 + 12345) & 0x7fffffff;
+	return *seed;
+}
+
 static int _quicksort_partition(Array *array, size_t low, size_t high, bool (*cmp)(void*,void*), size_t* output) {
 	if (!array || !cmp) {
 		return ARRAY_ERR_NULL;
@@ -275,7 +280,10 @@ static int _quicksort(Array* array, size_t low, size_t high, bool (*cmp)(void*, 
 		return ARRAY_SUCCESS;
 	}
 
-	size_t pivot_index = low + rand() % (high - low + 1);
+	int thread_id = omp_in_parallel() ? omp_get_thread_num() : 0;
+	unsigned int seed = (unsigned int)(clock() + 5678 * thread_id + low + high); // thread safe
+	size_t pivot_index = low + _lcg_rand(&seed) % (high - low + 1);
+		
 	_quicksort_swap(&array->data[pivot_index], &array->data[high]);
 
 	if (_quicksort_partition(array, low, high, cmp, &pivot_index) != ARRAY_SUCCESS) {
@@ -283,7 +291,6 @@ static int _quicksort(Array* array, size_t low, size_t high, bool (*cmp)(void*, 
 	}
 	
 	if ((high - low) > ARRAY_QS_PARALLEL_THRESHOLD) {
-		printf("let's fucking go!\n");
 		int status = ARRAY_SUCCESS;
 		
 		#pragma omp parallel sections shared(status)
@@ -304,7 +311,6 @@ static int _quicksort(Array* array, size_t low, size_t high, bool (*cmp)(void*, 
 		if (status != ARRAY_SUCCESS) return status;
 	}
 	else {
-		printf("we don't use parall!!\n");
 		if (_quicksort(array, low, pivot_index - 1, cmp) != ARRAY_SUCCESS) {
 			return ARRAY_ERR_INTERNAL;
 		}

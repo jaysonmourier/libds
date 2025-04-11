@@ -162,10 +162,11 @@ extern "C" {
 	int array_find_last(Array* array, void* element, bool (*cmp)(void*, void*), size_t* index_output);
 
 	/*
-	* Sorts the array (quicksort)
+	* Sorts the array with the quicksort algorithm
 	* 
 	* @param array Pointer to the array structure
 	* @param cmp Pointer to the function used to compare elements
+	* @return ARRAY_SUCCESS, ARRAY_ERR_NULL or ARRAY_ERR_INTERNAL
 	*/
 	int array_sort(Array* array, bool (*cmp)(void*, void*));
 
