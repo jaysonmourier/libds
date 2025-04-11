@@ -2,6 +2,7 @@
 #define H_LIBDS_ARRAY
 
 #include <stddef.h>
+#include <stdbool.h>
 #include <errno.h>
 
 #define ARRAY_MAX_CAPACITY (SIZE_MAX / sizeof(void*))
@@ -14,6 +15,7 @@
 #define ARRAY_ERR_OUT_OF_BOUNDS -3
 #define ARRAY_ERR_NULL -4
 #define ARRAY_ERR_INTERNAL -5
+#define ARRAY_ERR_NOT_FOUND -6
 
 #ifdef __cplusplus
 extern "C" {
@@ -112,6 +114,19 @@ extern "C" {
 	* @return ARRAY_SUCCESS or ARRAY_ERR_NULL
 	*/
 	int array_clear(Array* array, void (*free_fn)(void*));
+
+	/*
+	* Searches for the first occurrence of an element in the array using a comparison function.
+	*
+	* @param array Pointer to the array structure.
+	* @param element Pointer to the element to search for.
+	* @param cmp Comparison function that returns true (non-zero) when elements match.
+	* @param index Output pointer to store the index of the found element.
+	* @return ARRAY_SUCCESS if found,
+	*         ARRAY_ERR_NOT_FOUND if not found,
+	*         ARRAY_ERR_NULL if any input is NULL.
+	*/
+	int array_find_first(Array* array, void* element, bool (*cmp)(void*, void*), size_t* index);
 
 #ifdef __cplusplus
 }

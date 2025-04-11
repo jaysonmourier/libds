@@ -187,3 +187,20 @@ int array_clear(Array* array, void (*free_fn)(void*)) {
 
 	return ARRAY_SUCCESS;
 }
+
+int array_find_first(Array* array, void* element, bool (*cmp)(void*, void*), size_t* index) {
+	if (!array || !element || !cmp) {
+		return ARRAY_ERR_NULL;
+	}
+
+	*index = 0;
+
+	for (size_t i = 0; i < array->size; ++i) {
+		if (cmp(element, array->data[i])) {
+			*index = i;
+			return ARRAY_SUCCESS;
+		}
+	}
+
+	return ARRAY_ERR_NOT_FOUND;
+}
