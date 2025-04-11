@@ -33,6 +33,22 @@ void array_destroy(Array* array, void (*free_fn)(void*)) {
 	array->capacity = 0;
 }
 
+int array_size(Array* array, size_t* size_output) {
+	if (!array || !size_output) {
+		return ARRAY_ERR_NULL;
+	}
+	*size_output = array->size;
+	return ARRAY_SUCCESS;
+}
+
+int array_capacity(Array* array, size_t* capacity_output) {
+	if (!array || !capacity_output) {
+		return ARRAY_ERR_NULL;
+	}
+	*capacity_output = array->capacity;
+	return ARRAY_SUCCESS;
+}
+
 int array_get(Array* array, unsigned index, void** element) {
 	if (!array || !array->data || !element) {
 		return ARRAY_ERR_NULL;

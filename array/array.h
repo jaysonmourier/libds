@@ -45,6 +45,24 @@ extern "C" {
 	void array_destroy(Array* array, void (*free_fn)(void*));
 
 	/*
+	* Gets the size of the array
+	* 
+	* @param array Pointer to the array structure@param array Pointer to the array structure
+	* @param size_output Output pointer where the size of the array will be stored
+	* @return ARRAY_SUCCESS or ARRAY_ERR_NULL
+	*/
+	int array_size(Array* array, size_t* size_output);
+
+	/*
+	* Gets the capacity of the array
+	*
+	* @param array Pointer to the array structure@param array Pointer to the array structure
+	* @param capacity_output Capacity pointer where the capacity of the array will be stored
+	* @return ARRAY_SUCCESS or ARRAY_ERR_NULL
+	*/
+	int array_capacity(Array* array, size_t* capacity_output);
+
+	/*
 	* Pushes the element at the end of the array
 	*
 	* @param array Pointer to the array structure
