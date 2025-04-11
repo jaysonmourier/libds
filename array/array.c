@@ -188,16 +188,29 @@ int array_clear(Array* array, void (*free_fn)(void*)) {
 	return ARRAY_SUCCESS;
 }
 
-int array_find_first(Array* array, void* element, bool (*cmp)(void*, void*), size_t* index) {
-	if (!array || !element || !cmp) {
+int array_find_first(Array* array, void* element, bool (*cmp)(void*, void*), size_t* index_output) {
+	if (!array || !element || !cmp || !index_output) {
 		return ARRAY_ERR_NULL;
 	}
 
-	*index = 0;
-
 	for (size_t i = 0; i < array->size; ++i) {
 		if (cmp(element, array->data[i])) {
-			*index = i;
+			*index_output = i;
+			return ARRAY_SUCCESS;
+		}
+	}
+
+	return ARRAY_ERR_NOT_FOUND;
+}
+
+int array_find_last(Array* array, void* element, bool (*cmp)(void*, void*), size_t* index_output) {
+	if (!array || !element || !cmp || !index_output) {
+		return ARRAY_ERR_NULL;
+	}
+
+	for (size_t i = array->size; i-- > 0;) {
+		if (cmp(element, array->data[i])) {
+			*index_output = i;
 			return ARRAY_SUCCESS;
 		}
 	}
