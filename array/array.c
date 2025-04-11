@@ -107,3 +107,17 @@ int array_add(Array* array, void* element) {
 	array->data[array->size++] = element;
 	return ARRAY_SUCCESS;
 }
+
+int array_foreach(Array* array, int (*fn)(void*)) {
+	if (!array || !array->data || !fn) {
+		return ARRAY_ERR_NULL;
+	}
+
+	for (size_t i = 0; i < array->size; ++i) {
+		int result = fn(array->data[i]);
+		if (result == ARRAY_FOREACH_BREAK) break;
+		else if (result != ARRAY_SUCCESS) return result;
+	}
+
+	return ARRAY_SUCCESS;
+}

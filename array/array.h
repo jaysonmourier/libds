@@ -7,6 +7,7 @@
 #define ARRAY_MAX_CAPACITY (SIZE_MAX / sizeof(void*))
 #define ARRAY_GROWTH_FACTOR 2
 
+#define ARRAY_FOREACH_BREAK 1
 #define ARRAY_SUCCESS 0
 #define ARRAY_ERR_INVALID_CAP -1
 #define ARRAY_ERR_MEMALLOC -2
@@ -70,6 +71,15 @@ extern "C" {
 	* @return ARRAY_SUCCESS, ARRAY_ERR_NULL or ARRAY_ERR_OUT_OF_BOUNDS
 	*/
 	int array_set(Array* array, unsigned index, void* new_element, void (*free_fn)(void*));
+
+	/*
+	* Applies a function to each element of the array
+	* 
+	* @param array Pointer to the array structure
+	* @param callback Pointer to the function to apply to each element
+	* @return ARRAY_SUCCESS, ARRAY_ERR_NULL or the value returned by the callback function
+	*/
+	int array_foreach(Array* array, int (*callback)(void*));
 
 #ifdef __cplusplus
 }
