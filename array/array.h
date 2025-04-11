@@ -63,6 +63,9 @@ extern "C" {
 
 	/*
 	* Removes the element from the array at the given index
+	* The function maintains element order by shifting subsequent elements to the left.
+	* The last slot is cleared (set to NULL) and the size is decremented.
+	* If element order is not important, consider using `array_remove_fast()` for better performance.
 	* 
 	* @param array Pointer to the array structure
 	* @param index Index of the element
@@ -70,6 +73,16 @@ extern "C" {
 	* @return ARRAY_SUCCESS, ARRAY_ERR_NULL or ARRAY_ERR_OUT_OF_BOUNDS
 	*/
 	int array_remove(Array* array, unsigned index, void (*free_fn)(void*));
+
+	/*
+	* Removes the element from the array at the given index
+	*
+	* @param array Pointer to the array structure
+	* @param index Index of the element
+	* @param free_fn Pointer to the function used to free the element at the given index
+	* @return ARRAY_SUCCESS, ARRAY_ERR_NULL or ARRAY_ERR_OUT_OF_BOUNDS
+	*/
+	int array_remove_fast(Array* array, unsigned index, void (*free_fn)(void*));
 
 	/*
 	* Sets the element from array at the given index
