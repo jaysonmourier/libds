@@ -29,7 +29,8 @@ void array_destroy(Array* array, void (*free_fn)(void*)) {
 
 	free(array->data);
 	array->data = NULL;
-	free(array);
+	array->size = 0;
+	array->capacity = 0;
 }
 
 int array_get(Array* array, unsigned index, void** element) {
@@ -63,6 +64,13 @@ int array_set(Array* array, unsigned index, void* new_element, void (*free_fn)(v
 	return ARRAY_SUCCESS;
 }
 
+/*
+* Resizes the memory of the array to match the new capacity
+* 
+* @param array Pointer to the array structure
+* @param new_capacity New capacity of the array
+* @return ARRAY_SUCCESS, ARRAY_ERR_NULL, ARRAY_ERR_INVALID_CAP or ARRAY_ERR_MEMALLOC
+*/
 static int _array_resize(Array* array, size_t new_capacity) {
 	if (!array || !array->data) {
 		return ARRAY_ERR_NULL;
