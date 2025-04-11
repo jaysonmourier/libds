@@ -3,8 +3,10 @@
 
 #include <stddef.h>
 #include <stdbool.h>
+#include <stdint.h>
 #include <errno.h>
 
+#define ARRAY_QS_PARALLEL_THRESHOLD 10000
 #define ARRAY_MAX_CAPACITY (SIZE_MAX / sizeof(void*))
 #define ARRAY_GROWTH_FACTOR 2
 
@@ -158,6 +160,14 @@ extern "C" {
 	*         ARRAY_ERR_NULL if any input is NULL
 	*/
 	int array_find_last(Array* array, void* element, bool (*cmp)(void*, void*), size_t* index_output);
+
+	/*
+	* Sorts the array (quicksort)
+	* 
+	* @param array Pointer to the array structure
+	* @param cmp Pointer to the function used to compare elements
+	*/
+	int array_sort(Array* array, bool (*cmp)(void*, void*));
 
 #ifdef __cplusplus
 }
