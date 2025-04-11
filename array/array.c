@@ -170,3 +170,20 @@ int array_foreach(Array* array, int (*fn)(void*)) {
 
 	return ARRAY_SUCCESS;
 }
+
+int array_clear(Array* array, void (*free_fn)(void*)) {
+	if (!array || !array->data) {
+		return ARRAY_ERR_NULL;
+	}
+
+	for (size_t i = 0; i < array->size; ++i) {
+		if (free_fn && array->data[i]) {
+			free_fn(array->data[i]);
+		}
+		array->data[i] = NULL;
+	}
+
+	array->size = 0;
+
+	return ARRAY_SUCCESS;
+}

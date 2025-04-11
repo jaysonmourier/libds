@@ -104,6 +104,15 @@ extern "C" {
 	*/
 	int array_foreach(Array* array, int (*callback)(void*));
 
+	/*
+	* Clears all the element of the array
+	* 
+	* @param array Pointer to the array structure
+	* @param free_fn Function used to free the old elements
+	* @return ARRAY_SUCCESS or ARRAY_ERR_NULL
+	*/
+	int array_clear(Array* array, void (*free_fn)(void*));
+
 #ifdef __cplusplus
 }
 #endif
