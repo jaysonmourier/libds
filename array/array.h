@@ -1,5 +1,5 @@
-#ifndef H_ARRAY
-#define H_ARRAY
+#ifndef H_LIBDS_ARRAY
+#define H_LIBDS_ARRAY
 
 #include <stddef.h>
 #include <errno.h>
@@ -75,4 +75,4 @@ extern "C" {
 }
 #endif
 
-#endif // H_ARRAY
+#endif // H_LIBDS_ARRAY
