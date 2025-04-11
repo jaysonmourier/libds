@@ -108,6 +108,31 @@ int array_add(Array* array, void* element) {
 	return ARRAY_SUCCESS;
 }
 
+int array_remove(Array* array, unsigned index, void (*free_fn)(void*)) {
+	if (!array) {
+		return ARRAY_ERR_NULL;
+	}
+
+	if (index >= array->size) {
+		return ARRAY_ERR_OUT_OF_BOUNDS;
+	}
+
+	if (free_fn) {
+		free_fn(array->data[index]);
+		array->data[index] = NULL;
+	}
+
+	size_t current_index = index;
+	for (size_t i = current_index + 1; i < array->size; ++i) {
+		array->data[current_index++] = array->data[i];
+	}
+
+	array->size--;
+	array->data[array->size] = NULL;
+
+	return ARRAY_SUCCESS;
+}
+
 int array_foreach(Array* array, int (*fn)(void*)) {
 	if (!array || !array->data || !fn) {
 		return ARRAY_ERR_NULL;

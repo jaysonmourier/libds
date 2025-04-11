@@ -62,6 +62,16 @@ extern "C" {
 	int array_get(Array* array, unsigned index, void** element);
 
 	/*
+	* Removes the element from the array at the given index
+	* 
+	* @param array Pointer to the array structure
+	* @param index Index of the element
+	* @param free_fn Pointer to the function used to free the element at the given index
+	* @return ARRAY_SUCCESS, ARRAY_ERR_NULL or ARRAY_ERR_OUT_OF_BOUNDS
+	*/
+	int array_remove(Array* array, unsigned index, void (*free_fn)(void*));
+
+	/*
 	* Sets the element from array at the given index
 	*
 	* @param array Pointer to the array structure
