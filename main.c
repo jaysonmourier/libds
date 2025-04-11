@@ -22,6 +22,7 @@ int main(void) {
 	Scalar b = { 3 };
 	Scalar c = { 7 };
 	Scalar d = { 1 };
+	Scalar e = { 9 };
 
 	Array array;
 
@@ -33,6 +34,7 @@ int main(void) {
 	array_add(&array, &a);
 	array_add(&array, &b);
 	array_add(&array, &c);
+	array_add(&array, &e);
 	array_add(&array, &d);
 
 	array_set(&array, 0, &c, NULL);
