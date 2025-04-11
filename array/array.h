@@ -14,7 +14,7 @@
 #define ARRAY_ERR_NULL -4
 #define ARRAY_ERR_INTERNAL -5
 
-#ifdef "__cplusplus"
+#ifdef __cplusplus
 extern "C" {
 #endif
 
@@ -71,7 +71,7 @@ extern "C" {
 	*/
 	int array_set(Array* array, unsigned index, void* new_element, void (*free_fn)(void*));
 
-#ifdef "__cplusplus"
+#ifdef __cplusplus
 }
 #endif
 
