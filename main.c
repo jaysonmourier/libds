@@ -12,6 +12,11 @@ bool compare_scalar(void* a, void* b) {
 	return ((Scalar*)a)->a < ((Scalar*)b)->a;
 }
 
+int print_array_scalar(void* element) {
+	printf("%zu\n", ((Scalar*)element)->a);
+	return 0;
+}
+
 static unsigned int lcg_rand(unsigned int* seed) {
 	*seed = (*seed * 1103515245 + 12345) & 0x7fffffff;
 	return *seed;
@@ -35,14 +40,11 @@ int main(void) {
 	array_add(&array, &c);
 	array_add(&array, &d);
 
+	array_set(&array, 0, &c, NULL);
+
 	array_sort(&array, compare_scalar);
 	
-	for (size_t i = 0; i < array.size; ++i) {
-		void* tmp;
-		array_get(&array, i, &tmp);
-		Scalar* s = (Scalar*)tmp;
-		printf("%d\n", s->a);
-	}
+	array_foreach(&array, print_array_scalar);
 
 	array_destroy(&array, NULL);
 	return 0;

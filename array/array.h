@@ -53,7 +53,7 @@ extern "C" {
 	* @param size_output Output pointer where the size of the array will be stored
 	* @return ARRAY_SUCCESS or ARRAY_ERR_NULL
 	*/
-	int array_size(Array* array, size_t* size_output);
+	int array_size(const Array* array, size_t* size_output);
 
 	/*
 	* Gets the capacity of the array
@@ -62,7 +62,7 @@ extern "C" {
 	* @param capacity_output Capacity pointer where the capacity of the array will be stored
 	* @return ARRAY_SUCCESS or ARRAY_ERR_NULL
 	*/
-	int array_capacity(Array* array, size_t* capacity_output);
+	int array_capacity(const Array* array, size_t* capacity_output);
 
 	/*
 	* Pushes the element at the end of the array
@@ -81,7 +81,7 @@ extern "C" {
 	* @param element Output pointer where the retrieved element will be stored
 	* @return ARRAY_SUCCESS, ARRAY_ERR_NULL or ARRAY_ERR_OUT_OF_BOUNDS
 	*/
-	int array_get(Array* array, unsigned index, void** element);
+	int array_get(const Array* array, const unsigned index, void** element);
 
 	/*
 	* Removes the element from the array at the given index
@@ -94,7 +94,7 @@ extern "C" {
 	* @param free_fn Pointer to the function used to free the element at the given index
 	* @return ARRAY_SUCCESS, ARRAY_ERR_NULL or ARRAY_ERR_OUT_OF_BOUNDS
 	*/
-	int array_remove(Array* array, unsigned index, void (*free_fn)(void*));
+	int array_remove(Array* array, const unsigned index, void (*free_fn)(void*));
 
 	/*
 	* Removes the element from the array at the given index
@@ -104,7 +104,7 @@ extern "C" {
 	* @param free_fn Pointer to the function used to free the element at the given index
 	* @return ARRAY_SUCCESS, ARRAY_ERR_NULL or ARRAY_ERR_OUT_OF_BOUNDS
 	*/
-	int array_remove_fast(Array* array, unsigned index, void (*free_fn)(void*));
+	int array_remove_fast(Array* array, const unsigned index, void (*free_fn)(void*));
 
 	/*
 	* Sets the element from array at the given index
@@ -115,7 +115,7 @@ extern "C" {
 	* @param free_fn Function used to free the old element at the given index
 	* @return ARRAY_SUCCESS, ARRAY_ERR_NULL or ARRAY_ERR_OUT_OF_BOUNDS
 	*/
-	int array_set(Array* array, unsigned index, void* new_element, void (*free_fn)(void*));
+	int array_set(Array* array, const unsigned index, void* new_element, void (*free_fn)(void*));
 
 	/*
 	* Applies a function to each element of the array
@@ -146,7 +146,7 @@ extern "C" {
 	*         ARRAY_ERR_NOT_FOUND if not found,
 	*         ARRAY_ERR_NULL if any input is NULL
 	*/
-	int array_find_first(Array* array, void* element, bool (*cmp)(void*, void*), size_t* index_output);
+	int array_find_first(const Array* array, const void* element, bool (*cmp)(void*, void*), size_t* index_output);
 
 	/*
 	* Searches for the last occurrence of an element in the array using a comparison function
@@ -159,7 +159,7 @@ extern "C" {
 	*         ARRAY_ERR_NOT_FOUND if not found,
 	*         ARRAY_ERR_NULL if any input is NULL
 	*/
-	int array_find_last(Array* array, void* element, bool (*cmp)(void*, void*), size_t* index_output);
+	int array_find_last(const Array* array, const void* element, bool (*cmp)(void*, void*), size_t* index_output);
 
 	/*
 	* Sorts the array with the quicksort algorithm

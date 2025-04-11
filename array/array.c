@@ -35,7 +35,7 @@ void array_destroy(Array* array, void (*free_fn)(void*)) {
 	array->capacity = 0;
 }
 
-int array_size(Array* array, size_t* size_output) {
+int array_size(const Array* array, size_t* size_output) {
 	if (!array || !size_output) {
 		return ARRAY_ERR_NULL;
 	}
@@ -43,7 +43,7 @@ int array_size(Array* array, size_t* size_output) {
 	return ARRAY_SUCCESS;
 }
 
-int array_capacity(Array* array, size_t* capacity_output) {
+int array_capacity(const Array* array, size_t* capacity_output) {
 	if (!array || !capacity_output) {
 		return ARRAY_ERR_NULL;
 	}
@@ -51,7 +51,7 @@ int array_capacity(Array* array, size_t* capacity_output) {
 	return ARRAY_SUCCESS;
 }
 
-int array_get(Array* array, unsigned index, void** element) {
+int array_get(const Array* array, const unsigned index, void** element) {
 	if (!array || !array->data || !element) {
 		return ARRAY_ERR_NULL;
 	}
@@ -65,7 +65,7 @@ int array_get(Array* array, unsigned index, void** element) {
 	return ARRAY_SUCCESS;
 }
 
-int array_set(Array* array, unsigned index, void* new_element, void (*free_fn)(void*)) {
+int array_set(Array* array, const unsigned index, void* new_element, void (*free_fn)(void*)) {
 	if (!array || !array->data) {
 		return ARRAY_ERR_NULL;
 	}
@@ -126,7 +126,7 @@ int array_add(Array* array, void* element) {
 	return ARRAY_SUCCESS;
 }
 
-int array_remove(Array* array, unsigned index, void (*free_fn)(void*)) {
+int array_remove(Array* array, const unsigned index, void (*free_fn)(void*)) {
 	if (!array) {
 		return ARRAY_ERR_NULL;
 	}
@@ -151,7 +151,7 @@ int array_remove(Array* array, unsigned index, void (*free_fn)(void*)) {
 	return ARRAY_SUCCESS;
 }
 
-int array_remove_fast(Array* array, unsigned index, void (*free_fn)(void*)) {
+int array_remove_fast(Array* array, const unsigned index, void (*free_fn)(void*)) {
 	if (!array) {
 		return ARRAY_ERR_NULL;
 	}
@@ -206,7 +206,7 @@ int array_clear(Array* array, void (*free_fn)(void*)) {
 	return ARRAY_SUCCESS;
 }
 
-int array_find_first(Array* array, void* element, bool (*cmp)(void*, void*), size_t* index_output) {
+int array_find_first(const Array* array, const void* element, bool (*cmp)(void*, void*), size_t* index_output) {
 	if (!array || !element || !cmp || !index_output) {
 		return ARRAY_ERR_NULL;
 	}
@@ -221,7 +221,7 @@ int array_find_first(Array* array, void* element, bool (*cmp)(void*, void*), siz
 	return ARRAY_ERR_NOT_FOUND;
 }
 
-int array_find_last(Array* array, void* element, bool (*cmp)(void*, void*), size_t* index_output) {
+int array_find_last(const Array* array, const void* element, bool (*cmp)(void*, void*), size_t* index_output) {
 	if (!array || !element || !cmp || !index_output) {
 		return ARRAY_ERR_NULL;
 	}
